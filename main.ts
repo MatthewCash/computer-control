@@ -15,10 +15,9 @@ const smartapp = new SmartApp()
     .contextStore(new ContextStore())
     .publicKey('@keys/smartthings_rsa.pub')
     .configureI18n()
-    // .enableEventLogging(2)
     .clientId('9e7392dd-8125-4922-a605-9a366e2a5b32')
     .clientSecret('9ae9f51f-c84e-4e81-85b2-c68e7bd8543a')
-    .page('mainPage', (context, page, configData) => {
+    .page('mainPage', (context, page) => {
         page.section('switch', section => {
             section
                 .deviceSetting('switch')
@@ -27,7 +26,7 @@ const smartapp = new SmartApp()
                 .permissions('rWx');
         });
     })
-    .updated(async (context, updateData) => {
+    .updated(async context => {
         await context.api.subscriptions.delete();
         context.api.subscriptions.subscribeToDevices(
             context.config.switch,
@@ -105,7 +104,6 @@ const pollComputer = async () => {
             'on'
         );
         state = true;
-        console.log('Updating to on ' + state);
     }
     if (fails > 4 && switchState) {
         await context.api.devices.sendCommands(
@@ -114,7 +112,6 @@ const pollComputer = async () => {
             'off'
         );
         state = false;
-        console.log('Updating to off ' + state);
     }
     await new Promise(r => setTimeout(r, 250));
 };

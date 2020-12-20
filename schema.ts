@@ -1,6 +1,6 @@
 import { Model, Document, model, Schema } from 'mongoose';
 
-declare interface ModelData extends Document {
+declare interface SmartDeviceData extends Document {
     installedAppId: string;
     locationId: string;
     authToken: string;
@@ -10,8 +10,8 @@ declare interface ModelData extends Document {
     config: any;
 }
 
-export class DataClass {
-    private _model: Model<ModelData>;
+export class SmartDeviceClass {
+    private _model: Model<SmartDeviceData>;
 
     constructor() {
         const schema = new Schema(
@@ -43,12 +43,12 @@ export class DataClass {
             }
         );
 
-        this._model = model<ModelData>('Data', schema);
+        this._model = model<SmartDeviceData>('Data', schema);
     }
 
-    public get model(): Model<ModelData> {
+    public get model(): Model<SmartDeviceData> {
         return this._model;
     }
 }
 
-export const Data = new DataClass().model;
+export const SmartDevice = new SmartDeviceClass().model;

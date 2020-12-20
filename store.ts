@@ -1,15 +1,15 @@
-import { Data } from './schema';
+import { SmartDevice } from './schema';
 
 export class ContextStore {
     constructor() {}
     async get(installedAppId) {
-        return Data.findOne({ installedAppId: installedAppId });
+        return SmartDevice.findOne({ installedAppId: installedAppId });
     }
 
     async put(params) {
-        await Data.remove({ installedAppId: params.installedAppId });
+        await SmartDevice.remove({ installedAppId: params.installedAppId });
 
-        const data = new Data({
+        const data = new SmartDevice({
             installedAppId: params.installedAppId,
             locationId: params.locationId,
             authToken: params.authToken,
@@ -19,32 +19,21 @@ export class ContextStore {
             config: params.config
         });
 
-        await data
-            .save()
-            .then(data => {
-                return { data };
-            })
-            .catch(error => {
-                throw error;
-            });
-
-        return data;
+        return data.save();
     }
 
     async update(installedAppId, params) {
-        const data = await Data.findOne({ installedAppId: installedAppId });
+        const data = await SmartDevice.findOne({
+            installedAppId: installedAppId
+        });
+
         data.authToken = params.authToken;
         data.refreshToken = params.refreshToken;
-        data.save()
-            .then(data => {
-                return { data };
-            })
-            .catch(error => {
-                throw error;
-            });
+
+        return data.save();
     }
 
     async delete(installedAppId) {
-        return Data.remove({ installedAppId: installedAppId });
+        return SmartDevice.remove({ installedAppId: installedAppId });
     }
 }
