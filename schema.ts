@@ -1,4 +1,4 @@
-import { Model, Document, model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
 declare interface SmartDeviceData extends Document {
     installedAppId: string;
@@ -10,45 +10,33 @@ declare interface SmartDeviceData extends Document {
     config: any;
 }
 
-export class SmartDeviceClass {
-    private _model: Model<SmartDeviceData>;
-
-    constructor() {
-        const schema = new Schema(
-            {
-                installedAppId: {
-                    type: String
-                },
-                locationId: {
-                    type: String
-                },
-                authToken: {
-                    type: String
-                },
-                refreshToken: {
-                    type: String
-                },
-                clientId: {
-                    type: String
-                },
-                clientSecret: {
-                    type: String
-                },
-                config: {
-                    type: Object
-                }
-            },
-            {
-                timestamps: true
-            }
-        );
-
-        this._model = model<SmartDeviceData>('Data', schema);
+const schema = new Schema(
+    {
+        installedAppId: {
+            type: String
+        },
+        locationId: {
+            type: String
+        },
+        authToken: {
+            type: String
+        },
+        refreshToken: {
+            type: String
+        },
+        clientId: {
+            type: String
+        },
+        clientSecret: {
+            type: String
+        },
+        config: {
+            type: Object
+        }
+    },
+    {
+        timestamps: true
     }
+);
 
-    public get model(): Model<SmartDeviceData> {
-        return this._model;
-    }
-}
-
-export const SmartDevice = new SmartDeviceClass().model;
+export const SmartDevice = model<SmartDeviceData>('SmartDevice', schema);
