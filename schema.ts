@@ -1,6 +1,6 @@
 import { Document, model, Schema } from 'mongoose';
 
-declare interface SmartDeviceData extends Document {
+declare interface SmartThingsDeviceData extends Document {
     installedAppId: string;
     locationId: string;
     authToken: string;
@@ -39,4 +39,7 @@ const schema = new Schema(
     }
 );
 
-export const SmartDevice = model<SmartDeviceData>('SmartDevice', schema);
+export const SmartThingsDevice = model<SmartThingsDeviceData>(
+    'SmartThingsDevice',
+    schema
+);

@@ -1,15 +1,17 @@
-import { SmartDevice } from './schema';
+import { SmartThingsDevice } from './schema';
 
 export class ContextStore {
     constructor() {}
     async get(installedAppId) {
-        return SmartDevice.findOne({ installedAppId: installedAppId });
+        return SmartThingsDevice.findOne({ installedAppId: installedAppId });
     }
 
     async put(params) {
-        await SmartDevice.remove({ installedAppId: params.installedAppId });
+        await SmartThingsDevice.remove({
+            installedAppId: params.installedAppId
+        });
 
-        const data = new SmartDevice({
+        const data = new SmartThingsDevice({
             installedAppId: params.installedAppId,
             locationId: params.locationId,
             authToken: params.authToken,
@@ -23,7 +25,7 @@ export class ContextStore {
     }
 
     async update(installedAppId, params) {
-        const data = await SmartDevice.findOne({
+        const data = await SmartThingsDevice.findOne({
             installedAppId: installedAppId
         });
 
@@ -34,6 +36,6 @@ export class ContextStore {
     }
 
     async delete(installedAppId) {
-        return SmartDevice.remove({ installedAppId: installedAppId });
+        return SmartThingsDevice.remove({ installedAppId: installedAppId });
     }
 }

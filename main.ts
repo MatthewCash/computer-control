@@ -36,22 +36,22 @@ const smartapp = new SmartApp()
         );
     })
     .subscribedEventHandler('switchHandler', async (context, { value }) => {
-        if (value == 'on') {
+        if (value === 'on') {
             if (state)
                 return console.log('Ignoring Internal Request for ' + value);
             console.log('Turning Computer On... ' + state);
-            exec('bash /opt/computer/actions/on.sh');
-        } else if (value == 'off') {
+            exec('bash /opt/computer-control/actions/on.sh');
+        } else if (value === 'off') {
             if (!state)
                 return console.log('Ignoring Internal Request for ' + value);
             console.log('Turning Computer Off... ' + state);
-            exec('bash /opt/computer/actions/off.sh');
+            exec('bash /opt/computer-control/actions/off.sh');
         }
     });
 
 const connectDatabase = async () => {
     console.log('Connecting to database');
-    await mongoose.connect('mongodb://127.0.0.1/computer', {
+    await mongoose.connect('mongodb://127.0.0.1/computer-control', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
