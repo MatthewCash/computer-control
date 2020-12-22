@@ -40,12 +40,14 @@ const smartapp = new SmartApp()
             if (state)
                 return console.log('Ignoring Internal Request for ' + value);
             console.log('Turning Computer On... ' + state);
-            exec('bash /opt/computer-control/actions/on.sh');
+            exec('/usr/bin/bash /opt/computer-control/actions/on.sh');
         } else if (value === 'off') {
             if (!state)
                 return console.log('Ignoring Internal Request for ' + value);
             console.log('Turning Computer Off... ' + state);
-            exec('bash /opt/computer-control/actions/off.sh');
+            exec(
+                '/usr/bin/sudo /usr/bin/bash /opt/computer-control/actions/off.sh'
+            );
         }
     });
 
