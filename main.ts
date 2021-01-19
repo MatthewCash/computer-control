@@ -1,6 +1,7 @@
 import express from 'express';
 import { SmartApp } from '@smartthings/smartapp';
 import ping from 'ping';
+import axios from 'axios';
 import { exec } from 'child_process';
 import mongoose from 'mongoose';
 import { ContextStore } from './store';
@@ -40,14 +41,22 @@ const smartapp = new SmartApp()
             if (state)
                 return console.log('Ignoring Internal Request for ' + value);
             console.log('Turning Computer On... ' + state);
-            exec('/usr/bin/bash /opt/computer-control/actions/on.sh');
+            // exec('/usr/bin/bash /opt/computer-control/actions/on.sh');
+            axios.post(process.env.CONTROL_URL, {
+                computer: true,
+                usb: true
+            });
         } else if (value === 'off') {
             if (!state)
                 return console.log('Ignoring Internal Request for ' + value);
             console.log('Turning Computer Off... ' + state);
-            exec(
-                '/usr/bin/sudo /usr/bin/bash /opt/computer-control/actions/off.sh'
-            );
+            // exec(
+            //     '/usr/bin/sudo /usr/bin/bash /opt/computer-control/actions/off.sh'
+            // );
+            axios.post(process.env.CONTROL_URL, {
+                computer: false,
+                usb: false
+            });
         }
     });
 
